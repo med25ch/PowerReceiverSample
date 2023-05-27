@@ -38,6 +38,11 @@ class MainActivity : AppCompatActivity() {
             sendCustomBroadcast()
         }
 
+        //Register for the custom broadcast
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(customReceiver,
+                IntentFilter(ACTION_CUSTOM_BROADCAST))
+
     }
 
     private fun sendCustomBroadcast() {
@@ -51,6 +56,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         this.unregisterReceiver(customReceiver)
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(customReceiver)
         super.onDestroy()
     }
 }
