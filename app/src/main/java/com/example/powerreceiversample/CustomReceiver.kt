@@ -8,12 +8,13 @@ import android.widget.Toast
 
 class CustomReceiver : BroadcastReceiver() {
 
+    companion object {
+        private const val ACTION_CUSTOM_BROADCAST = "${BuildConfig.APPLICATION_ID}.ACTION_CUSTOM_BROADCAST"
+    }
 
-init {
-    var hello = "Hello"
-}
     override fun onReceive(context: Context, intent: Intent) {
         val intentAction = intent.action
+
 
         intentAction?.let {
             var toastMessage = "unknown intent action"

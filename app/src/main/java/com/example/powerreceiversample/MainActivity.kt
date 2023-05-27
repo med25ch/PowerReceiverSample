@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.powerreceiversample.databinding.ActivityMainBinding
 import java.util.logging.Filter
 
 class MainActivity : AppCompatActivity() {
@@ -11,11 +13,17 @@ class MainActivity : AppCompatActivity() {
 
     private val customReceiver = CustomReceiver()
     private lateinit var filter: IntentFilter
+    companion object {
+        private const val ACTION_CUSTOM_BROADCAST = "${BuildConfig.APPLICATION_ID}.ACTION_CUSTOM_BROADCAST"
+    }
 
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         filter = IntentFilter()
 
@@ -24,6 +32,17 @@ class MainActivity : AppCompatActivity() {
 
         // Register the receiver using the activity context.
         this.registerReceiver(customReceiver,filter)
+
+
+        binding.sendBroadcast.setOnClickListener {
+            sendCustomBroadcast()
+        }
+
+    }
+
+    private fun sendCustomBroadcast() {
+        val customBroadcastIntent = Intent(ACTION_CUSTOM_BROADCAST)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(customBroadcastIntent)
     }
 
     override fun onResume() {
