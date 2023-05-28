@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private val customReceiver = CustomReceiver()
     private lateinit var filter: IntentFilter
+
     companion object {
         private const val ACTION_CUSTOM_BROADCAST = "${BuildConfig.APPLICATION_ID}.ACTION_CUSTOM_BROADCAST"
     }
@@ -29,9 +30,11 @@ class MainActivity : AppCompatActivity() {
 
         filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
         filter.addAction(Intent.ACTION_POWER_CONNECTED)
+        filter.addAction(Intent.ACTION_HEADSET_PLUG)
 
         // Register the receiver using the activity context.
         this.registerReceiver(customReceiver,filter)
+
 
 
         binding.sendBroadcast.setOnClickListener {
